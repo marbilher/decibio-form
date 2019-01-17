@@ -1,28 +1,65 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {users} from './UniversityData'
+import {fuzzysearch, SearchInput, UserList, Avatar, Row, User} from './FormVariables'
 
-class App extends Component {
+
+
+// https://github.com/bevacqua/fuzzysearch
+
+
+
+class App extends React.Component {
+  constructor() {
+    super()
+        
+    this.handleChange = this.handleChange.bind(this)
+    
+    this.state = {
+      value: '',
+      isLoading: true,
+      data: [],
+      filtered: [],
+      showFilterd: false
+    }
+  }
+  
+  componentDidMount() {
+    setTimeout(() => this.setState({data: users, isLoading: false}), 0)
+  }
+  
+  
+  handleChange({target: {value}}) {
+    if (!value.trim().length) {
+      this.setState({value: '', filtered: [], showFiltered: false})
+    } else {
+      const filtered = this.state.data.filter(
+        item => 
+          fuzzysearch(value, item.username) ||
+          fuzzysearch(value, item.displayName)
+      )
+      this.setState({
+        value,
+        filtered,
+        showFiltered: true
+      })
+    }
+  }
+
   render() {
+    // const {isLoading, data, showFiltered, filtered} = this.state;        
+    // isLoading || !data
+    // ? <div className="component">Loading</div>
+    // : <UserList data={showFiltered ? filtered : data} />
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+      <body>
+      <SearchInput
+        onChange={this.handleChange}
+        value={this.state.value} />
+        </body>
+    )
   }
 }
 
 export default App;
+
