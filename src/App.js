@@ -94,8 +94,8 @@ class App extends React.Component {
     } else {
       const filtered = this.state.data.filter(
         item => 
-          fuzzysearch(value, item['Account Name']) ||
-          fuzzysearch(value, item['Country'])
+          fuzzysearch(value, item.AccountName) ||
+          fuzzysearch(value, item.Country)
       )
       this.setState({
         value,
@@ -105,14 +105,27 @@ class App extends React.Component {
     }
   }
 
-//  aysnc parseDatabase(incomingData){
-//     var values = Object.getOwnPropertyNames(incomingData).map(function(key) {
-//       return incomingData[key];
-//         });
-//   }
 
   parseDatabase(incomingData){
     var values = Object.getOwnPropertyNames(incomingData).map(function(key) {
+
+      //collapse all arrays in each database object to be searched
+      var newKeys = Object.keys(incomingData[key]);
+      for (var i = 0; i < newKeys.length; i++) {
+          var val = incomingData[key][newKeys[i]];
+          if(Array.isArray(val)) {
+            val = val.toString();
+            incomingData[key][newKeys[i]] = val;
+            //this converts the arrays
+          }
+      }
+      
+      let oldName = incomingData[key]['Account Name'];
+      incomingData[key].AccountName = oldName;
+      //delete keys from objects is 100 times slower than setting undefined
+      //https://stackoverflow.com/questions/208105/how-do-i-remove-a-property-from-a-javascript-object
+      //this approach can drastically be improved upon by changing the renderUsers function
+      //and deleting the key reassignments
       return incomingData[key];
         });
       this.setState({

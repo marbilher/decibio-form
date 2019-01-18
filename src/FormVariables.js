@@ -2,6 +2,9 @@ import React from 'react'
 
 
 export function fuzzysearch (needle, haystack) {
+  if (!haystack) {
+    return false
+  }
     let hlen = haystack.length
     let nlen = needle.length
     if (nlen > hlen) {
