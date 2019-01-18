@@ -1,18 +1,76 @@
-import React, { Component } from 'react';
+import React from 'react'
 import './App.css';
 import {users} from './UniversityData'
 import {fuzzysearch, SearchInput, UserList, Avatar, Row, User} from './FormVariables'
 
 
+// function fuzzysearch (needle, haystack) {
+//   let hlen = haystack.length
+//   let nlen = needle.length
+//   if (nlen > hlen) {
+//     return false
+//   }
+//   if (nlen === hlen) {
+//     return needle === haystack
+//   }
+//   outer: for (var i = 0, j = 0; i < nlen; i++) {
+//     let nch = needle.charCodeAt(i)
+//     while (j < hlen) {
+//       if (haystack.charCodeAt(j++) === nch) {
+//         continue outer
+//       }
+//     }
+//     return false
+//   }
+//   return true
+// }
 
-// https://github.com/bevacqua/fuzzysearch
+// const SearchInput = ({value, onChange}) => (
+//   <div className="searchContainer component">
+//     <input
+//       placeholder="Type your search query"
+//       type="text"
+//       value={value}
+//       onChange={onChange} />
+//   </div>
+// )
 
+// const Avatar = ({src, alt}) => (
+//   <img className="avatar component" src={src} alt={alt} />
+// )
+
+// const Row = ({children, className}) => (
+//   <div className={`row ${className || ''}`}>
+//     {children}
+//   </div>
+// )
+
+// const User = ({username, displayName, avatarUrlSmall, url, id}) => (
+//   <Row className="userItem component" key={id}>
+//     <div className="avatarContainer">
+//       <Avatar src={avatarUrlSmall} alt={`${displayName} | @${username}`} />
+//     </div>
+    
+//     <div className="userInfoContainer">
+//       <div className="displayName">{displayName}</div>
+//       <div className="username">@{username}</div>
+//     </div>
+//   </Row>
+// )
+
+// const UserList = ({data}) => (
+//   <div className="userList component">
+//     {data.map(item => <User {...item} />)}
+//   </div>
+// )
 
 
 class App extends React.Component {
   constructor() {
     super()
-        
+    
+    this.renderInput = this.renderInput.bind(this)
+    this.parseDatabase = this.parseDatabase.bind(this)
     this.handleChange = this.handleChange.bind(this)
     
     this.state = {
@@ -25,7 +83,8 @@ class App extends React.Component {
   }
   
   componentDidMount() {
-    setTimeout(() => this.setState({data: users, isLoading: false}), 0)
+    this.parseDatabase(users);
+    setTimeout(() => this.setState({ isLoading: false}), 0)
   }
   
   
@@ -35,8 +94,8 @@ class App extends React.Component {
     } else {
       const filtered = this.state.data.filter(
         item => 
-          fuzzysearch(value, item.username) ||
-          fuzzysearch(value, item.displayName)
+          fuzzysearch(value, item['Account Name']) ||
+          fuzzysearch(value, item['Country'])
       )
       this.setState({
         value,
@@ -46,20 +105,45 @@ class App extends React.Component {
     }
   }
 
-  render() {
-    // const {isLoading, data, showFiltered, filtered} = this.state;        
-    // isLoading || !data
-    // ? <div className="component">Loading</div>
-    // : <UserList data={showFiltered ? filtered : data} />
+//  aysnc parseDatabase(incomingData){
+//     var values = Object.getOwnPropertyNames(incomingData).map(function(key) {
+//       return incomingData[key];
+//         });
+//   }
+
+  parseDatabase(incomingData){
+    var values = Object.getOwnPropertyNames(incomingData).map(function(key) {
+      return incomingData[key];
+        });
+      this.setState({
+        data: values
+      })
+  }
+
+  renderUsers() {
+    const {isLoading, data, showFiltered, filtered} = this.state
+    
+    return isLoading || !data
+      ? <div className="component">Loading</div>
+      : <UserList data={showFiltered ? filtered : data} />
+  }
+                     
+  renderInput() {
     return (
-      <body>
       <SearchInput
         onChange={this.handleChange}
         value={this.state.value} />
-        </body>
+    )
+  }
+
+  render() {
+    return (
+      <div className="appContainer component">
+        {this.renderInput()}
+        {this.renderUsers()}
+      </div>
     )
   }
 }
 
 export default App;
-

@@ -1,3 +1,6 @@
+import React from 'react'
+
+
 export function fuzzysearch (needle, haystack) {
     let hlen = haystack.length
     let nlen = needle.length
@@ -29,25 +32,18 @@ export function fuzzysearch (needle, haystack) {
     </div>
   )
   
-  export  const Avatar = ({src, alt}) => (
-    <img className="avatar component" src={src} alt={alt} />
-  )
-  
   export const Row = ({children, className}) => (
     <div className={`row ${className || ''}`}>
       {children}
     </div>
   )
   
-  export const User = ({username, displayName, avatarUrlSmall, url, id}) => (
+  export const User = ({AccountName, Country, url, id}) => (
     <Row className="userItem component" key={id}>
-      <div className="avatarContainer">
-        <Avatar src={avatarUrlSmall} alt={`${displayName} | @${username}`} />
-      </div>
       
       <div className="userInfoContainer">
-        <div className="displayName">{displayName}</div>
-        <div className="username">@{username}</div>
+        <div className="AccountName">{AccountName}</div>
+        <div className="Country">@{Country}</div>
       </div>
     </Row>
   )
