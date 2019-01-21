@@ -1,68 +1,7 @@
 import React from 'react'
 import './App.css';
 import {users} from './UniversityData'
-import {fuzzysearch, SearchInput, UserList, Avatar, Row, User} from './FormVariables'
-
-
-// function fuzzysearch (needle, haystack) {
-//   let hlen = haystack.length
-//   let nlen = needle.length
-//   if (nlen > hlen) {
-//     return false
-//   }
-//   if (nlen === hlen) {
-//     return needle === haystack
-//   }
-//   outer: for (var i = 0, j = 0; i < nlen; i++) {
-//     let nch = needle.charCodeAt(i)
-//     while (j < hlen) {
-//       if (haystack.charCodeAt(j++) === nch) {
-//         continue outer
-//       }
-//     }
-//     return false
-//   }
-//   return true
-// }
-
-// const SearchInput = ({value, onChange}) => (
-//   <div className="searchContainer component">
-//     <input
-//       placeholder="Type your search query"
-//       type="text"
-//       value={value}
-//       onChange={onChange} />
-//   </div>
-// )
-
-// const Avatar = ({src, alt}) => (
-//   <img className="avatar component" src={src} alt={alt} />
-// )
-
-// const Row = ({children, className}) => (
-//   <div className={`row ${className || ''}`}>
-//     {children}
-//   </div>
-// )
-
-// const User = ({username, displayName, avatarUrlSmall, url, id}) => (
-//   <Row className="userItem component" key={id}>
-//     <div className="avatarContainer">
-//       <Avatar src={avatarUrlSmall} alt={`${displayName} | @${username}`} />
-//     </div>
-    
-//     <div className="userInfoContainer">
-//       <div className="displayName">{displayName}</div>
-//       <div className="username">@{username}</div>
-//     </div>
-//   </Row>
-// )
-
-// const UserList = ({data}) => (
-//   <div className="userList component">
-//     {data.map(item => <User {...item} />)}
-//   </div>
-// )
+import {fuzzysearch, SearchInput, UserList, Row, User, NavBar} from './FormVariables'
 
 
 class App extends React.Component {
@@ -72,6 +11,7 @@ class App extends React.Component {
     this.renderInput = this.renderInput.bind(this)
     this.parseDatabase = this.parseDatabase.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.onSort = this.onSort.bind(this)
     
     this.state = {
       value: '',
@@ -86,6 +26,13 @@ class App extends React.Component {
     this.parseDatabase(users);
     setTimeout(() => this.setState({ isLoading: false}), 0)
   }
+
+  onSort(event, sortKey){
+    const data = this.state.data;
+    data.sort((a,b) => a[sortKey].localeCompare(b[sortKey]))
+    this.setState({data})
+  }
+
   
   
   handleChange({target: {value}}) {
@@ -95,7 +42,8 @@ class App extends React.Component {
       const filtered = this.state.data.filter(
         item => 
           fuzzysearch(value, item.AccountName) ||
-          fuzzysearch(value, item.Country)
+          fuzzysearch(value, item.Country) ||
+          fuzzysearch(value, item.Tags)
       )
       this.setState({
         value,
@@ -121,7 +69,13 @@ class App extends React.Component {
       }
       
       let oldName = incomingData[key]['Account Name'];
+      let oldPublicationCount = incomingData[key]['Publication Count'];
+      let oldAuthorCount = incomingData[key]['Author Count'];
+      let oldAccountType = incomingData[key]['Account Type'];
       incomingData[key].AccountName = oldName;
+      incomingData[key].PublicationCount = oldPublicationCount;
+      incomingData[key].AuthorCount = oldAuthorCount;
+      incomingData[key].AccountType = oldAccountType;
       //delete keys from objects is 100 times slower than setting undefined
       //https://stackoverflow.com/questions/208105/how-do-i-remove-a-property-from-a-javascript-object
       //this approach can drastically be improved upon by changing the renderUsers function
@@ -151,7 +105,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="appContainer component">
+      <div className="container-fluid">
+      <NavBar/>
         {this.renderInput()}
         {this.renderUsers()}
       </div>

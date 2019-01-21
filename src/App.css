@@ -1,32 +1,143 @@
-.App {
+
+
+.nudge-right {
+  text-align: left;
+  padding-left: 2em;
+}
+
+.search-container {
+  text-align: center;
+  padding: 1em;
+}
+
+input[type=text] {
+  background: transparent;
+  border: 1px solid black;
+  /* border-bottom: 2px solid #000000;
+  border-left: 1px solid #000000;
+  border-right: 1px solid #000000;
+  border-top: 2px solid black; */
+  border-radius: .5em;
+}
+
+.search-text {
+  color: black;
+  /* background-color: #77B1EC; */
+}
+
+#RoundedTable {
+  border-radius: 5px;
+  border-collapse: separate;
+}
+
+#RoundedTable th {
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding-left: 1em;
+
+}
+#RoundedTable td {
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding-left: 1em;
+
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+  color:    blue;
+   opacity: .2 !important;
+}
+
+
+table {
+  border-spacing: 1em;
+}
+
+.numeric {
+  text-align: center !important
+}
+
+.table {
+  border-radius: 9em;
+  border: none;
+}
+
+.searchContainer {
+  padding:1em;
+}
+
+.form-control {
+  font-size: 2rem;
+  padding: 25px 10px;
+}
+
+td { 
+  padding: 10px;
+}
+th { 
+  padding: 10px;
+}
+
+.navbar-title {
+  color:white;
+  font-size:3rem;
+}
+
+
+
+.navbar-links {
+  display: flex;
+  flex-direction: row;
+  padding-left: 2rem;
+  margin-bottom: 0;
+  list-style: none;
+  color: black;
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+.white-link {
+  color:white !important;
+  text-decoration: underline;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.decibio-navbar {
+  background-color: #77B1EC;
   color: white;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 4rem;
+  margin: 2rem;
 }
 
-.App-link {
-  color: #61dafb;
+
+/* .round {
+  width: 100%;
+  border-radius: 15px;
+  border: 1px #000 solid;
+  padding: 5px 5px 5px 25px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.corner {
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  height: 20px;
+  width: 20px;
+  z-index: 10;
+  border-radius: 10px;
+  border: none;
+  background: #000; 
 }
+
+.search {
+  position: relative;
+  width: 190px;
+  height: 30px;
+} */
