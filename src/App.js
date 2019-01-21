@@ -105,7 +105,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid project-font">
       <NavBar/>
         {this.renderInput()}
         {this.renderUsers()}

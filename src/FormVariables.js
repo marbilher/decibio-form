@@ -31,7 +31,7 @@ export function fuzzysearch (needle, haystack) {
   
   export const SearchInput = ({value, onChange}) => (
     <div className="decibio-search nudge-right search ">
-    <h1 className='search-text'>Database search: &ensp;
+    <h1 className='search-text text-uppercase'>Database search: &ensp;
       <input
         className='round corner'
         type="text"
@@ -59,11 +59,11 @@ export function fuzzysearch (needle, haystack) {
   
   export const NavBar = () => (
   <nav className="navbar-expand-lg decibio-navbar">
-  <a className="navbar-title" href="#">Decibio</a>
+  <a className="navbar-title text-uppercase" href="#">Decibio</a>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
   </button>
-  <div className="collapse navbar-collapse" id="navbarText">
+  <div className="collapse navbar-collapse text-uppercase" id="navbarText">
     <ul className="navbar-links mr-auto ">
       <li className="nav-item active">
         <a className="nav-link white-link" href="#">Active University Publications <span className="sr-only">(current)</span></a>
@@ -84,15 +84,15 @@ export function fuzzysearch (needle, haystack) {
   
   export const UserList = ({data}) => (
     <table id="RoundedTable" className="table col-md-12 table-striped table-condensed cf">
-      <thead className='cf'>
-            <tr className='table-primary'>
+      <thead className='cf font-weight-bold text-white'>
+            <tr className='table-primary table-top'>
               {/* easy to implement below, use props*/}
               {/* <th onClick={e => this.props.onSort(e, 'AccountName')}>Name</th> */}
-              <th className='nudge-right'><FaUniversity/>&ensp;Name</th>
-              <th><FaGlobe/>&ensp;Country</th>
+              <th className='nudge-right large-text'><FaUniversity size={70}/>&ensp;University Name</th>
+              <th className='numeric'><FaGlobe/>&ensp;Country</th>
               <th className='numeric'><FaBook/>&ensp;Publications</th>
               <th className='numeric'><FaPencilAlt/>&ensp;Authors</th>
-              <th><FaTags/>&ensp;Tags</th>
+              <th className='text-bold large-text'><FaTags size={56}/>&ensp;Tags</th>
             </tr>
           </thead>
       <tbody>
