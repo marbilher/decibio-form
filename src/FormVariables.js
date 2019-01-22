@@ -1,6 +1,5 @@
 import React from 'react'
 import { FaBook, FaUniversity, FaTags, FaGlobe, FaPencilAlt } from 'react-icons/fa';
-import { WithContext as ReactTags } from 'react-tag-input';
 import { Badge } from 'reactstrap';
 
 
@@ -32,8 +31,10 @@ export function fuzzysearch (needle, haystack) {
   }
   
   export const SearchInput = ({value, onChange}) => (
-    <div className="decibio-search nudge-right search ">
-    <h1 className='search-text text-uppercase'>Fuzzy search: &ensp;
+    // <div className="decibio-search nudge-right search">
+        <div className="">
+
+    <h1 className='Form-label text-uppercase margin-auto'>search &ensp;
       <input
         className='round corner'
         type="text"
@@ -42,12 +43,52 @@ export function fuzzysearch (needle, haystack) {
         </h1>
     </div>
   )
-  
-  export const Row = ({children, className}) => (
-    <div className={`row ${className || ''}`}>
-      {children}
-    </div>
+
+  export const CheckBoxes = ({value, onChange}) => (
+    <form className='Form check-container row'>
+        <input type="checkbox"
+        id='CRISPR' 
+        onChange={onChange} 
+        defaultChecked={value}
+        className='CRISPR Form-input'/>
+		<label for='CRISPR' className='Form-label sm'>CRISPR</label>
+    <input type="checkbox"
+        id='Genetics' 
+        onChange={onChange} 
+        defaultChecked={value}
+        className='Genetics Form-input'/>
+		<label for='Genetics' className='Form-label sm'>Genetics</label>
+    <input type="checkbox"
+        id='Mol-Bio' 
+        onChange={onChange} 
+        defaultChecked={value}
+        className='Mol-Bio Form-input'/>
+		<label for='Mol-Bio' className='Form-label sm'>Mol-Bio</label>
+    <input type="checkbox"
+        id='Diagnostics' 
+        onChange={onChange} 
+        defaultChecked={value}
+        className='Diagnostics Form-input'/>
+		<label for='Diagnostics' className='Form-label sm'>DIAG</label>
+    <input type="checkbox"
+        id='Clinical' 
+        onChange={onChange} 
+        defaultChecked={value}
+        className='Clinical Form-input'/>
+		<label for='Clinical' className='Form-label sm'>Clinical</label>
+    <input type="checkbox"
+        id='Hospital' 
+        onChange={onChange} 
+        defaultChecked={value}
+        className='Hospital Form-input'/>
+		<label for='Hospital' className='Form-label sm'>Hospital</label>
+  </form>
   )
+
+
+
+  
+  
   
   export const User = ({AccountName, Country, Tags, PublicationCount, AuthorCount, id}) => (
     <tr className="userItem component" key={id}>

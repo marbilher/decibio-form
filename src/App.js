@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css';
 import {users} from './UniversityData'
-import {fuzzysearch, SearchInput, UserList, Row, User, NavBar} from './FormVariables'
+import {fuzzysearch, SearchInput, CheckBoxes, UserList, User, NavBar} from './FormVariables'
 
 
 class App extends React.Component {
@@ -12,10 +12,12 @@ class App extends React.Component {
     this.parseDatabase = this.parseDatabase.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.onSort = this.onSort.bind(this)
+    this.handleCheck = this.handleCheck.bind(this)
     
     this.state = {
       value: '',
       isLoading: true,
+      checked:false,
       data: [],
       filtered: [],
       showFilterd: false
@@ -50,6 +52,12 @@ class App extends React.Component {
         showFiltered: true
       })
     }
+  }
+
+  handleCheck({target: {value}}) {
+    console.log('working')
+    this.setState({checked: !this.state.checked});
+    console.log(this.state.checked)
   }
 
 
@@ -95,9 +103,15 @@ class App extends React.Component {
                      
   renderInput() {
     return (
+      <div className='l-container'>
       <SearchInput
         onChange={this.handleChange}
         value={this.state.value} />
+       
+        <CheckBoxes
+        onChange={this.handleCheck}
+        value={this.state.checked} />
+        </div>
     )
   }
 
