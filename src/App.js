@@ -42,8 +42,7 @@ class App extends React.Component {
       const filtered = this.state.data.filter(
         item => 
           fuzzysearch(value, item.AccountName) ||
-          fuzzysearch(value, item.Country) ||
-          fuzzysearch(value, item.Tags)
+          fuzzysearch(value, item.Country)
       )
       this.setState({
         value,
@@ -57,14 +56,13 @@ class App extends React.Component {
   parseDatabase(incomingData){
     var values = Object.getOwnPropertyNames(incomingData).map(function(key) {
 
-      //collapse all arrays in each database object to be searched
+      // collapse all arrays in each database object to be searched
       var newKeys = Object.keys(incomingData[key]);
       for (var i = 0; i < newKeys.length; i++) {
           var val = incomingData[key][newKeys[i]];
-          if(Array.isArray(val)) {
+          if(Array.isArray(val) && [newKeys[i]] != "Tags") {
             val = val.toString();
             incomingData[key][newKeys[i]] = val;
-            //this converts the arrays
           }
       }
       

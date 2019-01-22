@@ -27,26 +27,36 @@ input[type=text] {
   border-radius: .5em;
 }
 
+.table-tags {
+  padding: .5rem !important;
+}
+
+.table-tag {
+  padding: .2rem !important;
+  margin: .2rem;
+}
+
 .search-text {
   color: black;
   /* background-color: #77B1EC; */
 }
 
 #RoundedTable {
-  border-radius: 5px;
+  /* border-radius: 5px; */
   border-collapse: separate;
+  padding:1rem;
 }
 
 #RoundedTable th {
   border: 1px solid gray;
-  border-radius: 10px;
-  padding-left: 1em;
+  /* border-radius: 10px; */
+  /* padding-left: 1em; */
 
 }
 #RoundedTable td {
   border: 1px solid gray;
-  border-radius: 10px;
-  padding-left: 1em;
+  /* border-radius: 10px; */
+  /* padding-left: 1em; */
 
 }
 
@@ -55,10 +65,10 @@ input[type=text] {
    opacity: .2 !important;
 }
 
-
+/* 
 table {
   border-spacing: 1em;
-}
+} */
 
 .table-top {
   font-size:1.5rem;
@@ -83,15 +93,19 @@ table {
 }
 
 td { 
-  padding: 10px;
+  /* padding: 10px; */
 }
 th { 
-  padding: 10px;
+  /* padding: 10px; */
 }
 
 .navbar-title {
   color:white;
-  font-size:3rem;
+  font-size:4rem;
+  border-style: solid;
+  border-width: .2rem;
+  padding-left: .5rem;
+  padding-right: .5rem;
 }
 
 .large-text {

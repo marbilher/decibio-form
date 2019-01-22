@@ -1,5 +1,7 @@
 import React from 'react'
 import { FaBook, FaUniversity, FaTags, FaGlobe, FaPencilAlt } from 'react-icons/fa';
+import { WithContext as ReactTags } from 'react-tag-input';
+import { Badge } from 'reactstrap';
 
 
 export function fuzzysearch (needle, haystack) {
@@ -31,7 +33,7 @@ export function fuzzysearch (needle, haystack) {
   
   export const SearchInput = ({value, onChange}) => (
     <div className="decibio-search nudge-right search ">
-    <h1 className='search-text text-uppercase'>Database search: &ensp;
+    <h1 className='search-text text-uppercase'>Fuzzy search: &ensp;
       <input
         className='round corner'
         type="text"
@@ -53,13 +55,15 @@ export function fuzzysearch (needle, haystack) {
         <td data-title="Country" className='Country'>{Country}</td>
         <td data-title="PublicationCount" className='PublicationCount numeric'>{PublicationCount}</td>
         <td data-title="AuthorCount" className='AuthorCount numeric'>{AuthorCount}</td>
-        <td data-title="Tags" className='Tags'>{Tags}</td>
+        <td data-title="Tags" className='Tags table-tags'>
+        {Tags.map(tag => <Badge className='table-tag'>{tag}</Badge>)} 
+          </td>
     </tr>
   )
   
   export const NavBar = () => (
   <nav className="navbar-expand-lg decibio-navbar">
-  <a className="navbar-title text-uppercase" href="#">Decibio</a>
+  <a className="navbar-title text-uppercase" >Decibio</a>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
   </button>
