@@ -12,15 +12,22 @@ class App extends React.Component {
     this.parseDatabase = this.parseDatabase.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.onSort = this.onSort.bind(this)
+    this.removeUntagged = this.removeUntagged.bind(this)
     this.handleCheck = this.handleCheck.bind(this)
     
     this.state = {
       value: '',
       isLoading: true,
+      CRISPR: false,
+      Clinical: false,
+      Diagnostics: false,
+      MolBio: false,
+      Genetics: false,
+      Hospital: false,
       checked:false,
       data: [],
       filtered: [],
-      showFilterd: false
+      showFiltered: false
     }
   }
   
@@ -35,35 +42,106 @@ class App extends React.Component {
     this.setState({data})
   }
 
+  handleCheck(event, value) {
+    // var currentValue = this.state.value;
+    // var eventTarget = event.target;
+    // var checkedObject = {eventTarget: {currentValue}}
+    // i tried passing the same format into handlechange but doesn't work
+
+    this.setState({
+      [event.target.id]:event.target.checked
+    })
+
+
+    //whenever a checkbox is hit, removeUntagged from filtered
+
+    // const filtered = this.state.filtered.filter(
+    //   item => 
+    //     this.removeUntagged(item.Tags)
+    // )
+    
+    // this.setState({
+    //   value,
+    //   filtered,
+    //   showFiltered: true
+    // })
+
+  }
+
+  componentDidUpdate(prevProps) {
+    var currentInputValue = this.state.value
+    if (!currentInputValue || 0 === currentInputValue.length) {
+      debugger;
+      return;
+    }
+    // Typical usage (don't forget to compare props):
+    // if (this.props.userID !== prevProps.userID) {
+    //   this.fetchData(this.props.userID);
+    // }
+  }
+
+  
+  removeUntagged(array) {
+  var checkedBoxes = [];
+  if (this.state.CRISPR) {
+    checkedBoxes.push('CRISPR')
+  }
+  if (this.state.Clinical) {
+    checkedBoxes.push('Clinical')
+  }
+  if (this.state.Diagnostics) {
+    checkedBoxes.push('Diagnostics')
+  }
+  if (this.state.Hospital) {
+    checkedBoxes.push('Hospital')
+  }
+  if (this.state.MolBio) {
+    checkedBoxes.push('Mol-Bio')
+  }
+  if (this.state.Genetics) {
+    checkedBoxes.push('Genetics')
+  }
+  for (var i = 0; i < checkedBoxes.length; i++) {
+    var beingChecked = checkedBoxes[i];
+    var isItIncluded = array.includes(beingChecked)
+    if (isItIncluded == true) {
+      return true;
+    }
+    return false;
+  }
+}
+
   
   
-  handleChange({target: {value}}) {
+  handleChange({target:{value}}) {
+    
     if (!value.trim().length) {
       this.setState({value: '', filtered: [], showFiltered: false})
     } else {
-      const filtered = this.state.data.filter(
+      const preFiltered = this.state.data.filter(
         item => 
           fuzzysearch(value, item.AccountName) ||
           fuzzysearch(value, item.Country)
+      ) 
+      const filtered = preFiltered.filter(
+        item => 
+          this.removeUntagged(item.Tags)
       )
+      
+
       this.setState({
         value,
         filtered,
         showFiltered: true
       })
     }
-  }
 
-  handleCheck({target: {value}}) {
-    console.log('working')
-    this.setState({checked: !this.state.checked});
-    console.log(this.state.checked)
   }
 
 
   parseDatabase(incomingData){
     var values = Object.getOwnPropertyNames(incomingData).map(function(key) {
-
+      console.log('parsing db')
       // collapse all arrays in each database object to be searched
       var newKeys = Object.keys(incomingData[key]);
       for (var i = 0; i < newKeys.length; i++) {
@@ -110,7 +188,7 @@ class App extends React.Component {
        
         <CheckBoxes
         onChange={this.handleCheck}
-        value={this.state.checked} />
+         />
         </div>
     )
   }

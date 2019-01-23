@@ -3,6 +3,7 @@ import { FaBook, FaUniversity, FaTags, FaGlobe, FaPencilAlt } from 'react-icons/
 import { Badge } from 'reactstrap';
 
 
+
 export function fuzzysearch (needle, haystack) {
   if (!haystack) {
     //UniversityData.js objects have inconsistent schema/pattern
@@ -31,9 +32,7 @@ export function fuzzysearch (needle, haystack) {
   }
   
   export const SearchInput = ({value, onChange}) => (
-    // <div className="decibio-search nudge-right search">
-        <div className="">
-
+    <div className="">
     <h1 className='Form-label text-uppercase margin-auto'>search &ensp;
       <input
         className='round corner'
@@ -59,11 +58,11 @@ export function fuzzysearch (needle, haystack) {
         className='Genetics Form-input'/>
 		<label for='Genetics' className='Form-label sm'>Genetics</label>
     <input type="checkbox"
-        id='Mol-Bio' 
+        id='MolBio' 
         onChange={onChange} 
         defaultChecked={value}
-        className='Mol-Bio Form-input'/>
-		<label for='Mol-Bio' className='Form-label sm'>Mol-Bio</label>
+        className='MolBio Form-input'/>
+		<label for='MolBio' className='Form-label sm'>Mol-Bio</label>
     <input type="checkbox"
         id='Diagnostics' 
         onChange={onChange} 
