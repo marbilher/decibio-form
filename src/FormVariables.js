@@ -48,37 +48,37 @@ export function fuzzysearch (needle, haystack) {
         <input type="checkbox"
         id='CRISPR' 
         onChange={onChange} 
-        defaultChecked={value}
+        defaultChecked
         className='CRISPR Form-input'/>
 		<label for='CRISPR' className='Form-label sm'>CRISPR</label>
     <input type="checkbox"
         id='Genetics' 
         onChange={onChange} 
-        defaultChecked={value}
+        defaultChecked
         className='Genetics Form-input'/>
 		<label for='Genetics' className='Form-label sm'>Genetics</label>
     <input type="checkbox"
         id='MolBio' 
         onChange={onChange} 
-        defaultChecked={value}
+        defaultChecked
         className='MolBio Form-input'/>
 		<label for='MolBio' className='Form-label sm'>Mol-Bio</label>
     <input type="checkbox"
         id='Diagnostics' 
         onChange={onChange} 
-        defaultChecked={value}
+        defaultChecked
         className='Diagnostics Form-input'/>
 		<label for='Diagnostics' className='Form-label sm'>DIAG</label>
     <input type="checkbox"
         id='Clinical' 
         onChange={onChange} 
-        defaultChecked={value}
+        defaultChecked
         className='Clinical Form-input'/>
 		<label for='Clinical' className='Form-label sm'>Clinical</label>
     <input type="checkbox"
         id='Hospital' 
         onChange={onChange} 
-        defaultChecked={value}
+        defaultChecked
         className='Hospital Form-input'/>
 		<label for='Hospital' className='Form-label sm'>Hospital</label>
   </form>

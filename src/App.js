@@ -14,16 +14,20 @@ class App extends React.Component {
     this.onSort = this.onSort.bind(this)
     this.removeUntagged = this.removeUntagged.bind(this)
     this.handleCheck = this.handleCheck.bind(this)
-    
+    this.updateTable = this.updateTable.bind(this)
+    this.getFilteredBySearch = this.getFilteredBySearch.bind(this)
+    this.getFilteredByTags = this.getFilteredByTags.bind(this)
+    this.filterTable = this.filterTable.bind(this)
+
     this.state = {
       value: '',
       isLoading: true,
-      CRISPR: false,
-      Clinical: false,
-      Diagnostics: false,
-      MolBio: false,
-      Genetics: false,
-      Hospital: false,
+      CRISPR: true,
+      Clinical: true,
+      Diagnostics: true,
+      MolBio: true,
+      Genetics: true,
+      Hospital: true,
       checked:false,
       data: [],
       filtered: [],
@@ -33,7 +37,7 @@ class App extends React.Component {
   
   componentDidMount() {
     this.parseDatabase(users);
-    setTimeout(() => this.setState({ isLoading: false}), 0)
+    this.updateTable();
   }
 
   onSort(event, sortKey){
@@ -43,42 +47,59 @@ class App extends React.Component {
   }
 
   handleCheck(event, value) {
-    // var currentValue = this.state.value;
-    // var eventTarget = event.target;
-    // var checkedObject = {eventTarget: {currentValue}}
-    // i tried passing the same format into handlechange but doesn't work
-
     this.setState({
       [event.target.id]:event.target.checked
-    })
-
-
-    //whenever a checkbox is hit, removeUntagged from filtered
-
-    // const filtered = this.state.filtered.filter(
-    //   item => 
-    //     this.removeUntagged(item.Tags)
-    // )
-    
-    // this.setState({
-    //   value,
-    //   filtered,
-    //   showFiltered: true
-    // })
-
+    }, this.updateTable())
   }
 
-  componentDidUpdate(prevProps) {
-    var currentInputValue = this.state.value
-    if (!currentInputValue || 0 === currentInputValue.length) {
-      debugger;
+  updateTable() {
+    var value = this.state.value
+    if (!value || 0 === value.length) {
       return;
+    } else {
+      this.getFilteredBySearch()
+        .then((preFiltered) => {
+          return this.getFilteredByTags(preFiltered);
+        })
+        .then((filtered) =>{
+          return this.filterTable(filtered);
+        })      
     }
-    // Typical usage (don't forget to compare props):
-    // if (this.props.userID !== prevProps.userID) {
-    //   this.fetchData(this.props.userID);
-    // }
+    }
+
+
+    filterTable(filtered, value) {
+      this.setState({
+        filtered,
+        isLoading: false,
+        showFiltered: true
+      })
+    }
+
+
+    getFilteredByTags = function(preFiltered) {
+      return new Promise((resolve,reject) => {
+      const filtered = preFiltered.filter(
+        item => 
+          this.removeUntagged(item.Tags)
+      )
+      resolve(filtered);
+    })
   }
+    
+
+    getFilteredBySearch = function() {
+      return new Promise((resolve,reject) => {
+      var value = this.state.value
+      const preFiltered = this.state.data.filter(
+        item => 
+          fuzzysearch(value, item.AccountName) ||
+          fuzzysearch(value, item.Country)
+      ) 
+        resolve(preFiltered);
+    })
+  }
+  
 
   
   removeUntagged(array) {
@@ -114,28 +135,13 @@ class App extends React.Component {
   
   
   handleChange({target:{value}}) {
-    
     if (!value.trim().length) {
       this.setState({value: '', filtered: [], showFiltered: false})
     } else {
-      const preFiltered = this.state.data.filter(
-        item => 
-          fuzzysearch(value, item.AccountName) ||
-          fuzzysearch(value, item.Country)
-      ) 
-      const filtered = preFiltered.filter(
-        item => 
-          this.removeUntagged(item.Tags)
-      )
-      
-
       this.setState({
         value,
-        filtered,
-        showFiltered: true
-      })
+      }, this.updateTable())
     }
-
   }
 
 
